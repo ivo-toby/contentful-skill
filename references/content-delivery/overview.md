@@ -7,7 +7,7 @@ The CDA is a read-only API for delivering published content to apps and websites
 - **US**: `https://cdn.contentful.com`
 - **EU**: `https://cdn.eu.contentful.com`
 
-All endpoints follow: `https://cdn.contentful.com/spaces/{space_id}/environments/{environment_id}/...`
+Most endpoints follow: `https://cdn.contentful.com/spaces/{space_id}/environments/{environment_id}/...`. The space info endpoint uses `/spaces/{space_id}` without an environment segment.
 
 ## Authentication
 

@@ -7,7 +7,7 @@ The CMA is a read/write API for managing content, content types, assets, and env
 - **US**: `https://api.contentful.com`
 - **EU**: `https://api.eu.contentful.com`
 
-All endpoints follow: `https://api.contentful.com/spaces/{space_id}/environments/{environment_id}/...`
+Most endpoints follow: `https://api.contentful.com/spaces/{space_id}/environments/{environment_id}/...`. Some are space-scoped and omit the environment segment (e.g., `/spaces/{space_id}/environment_aliases/...`).
 
 ## Required Headers
 

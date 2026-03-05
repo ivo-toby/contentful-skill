@@ -56,7 +56,7 @@ Query content via GraphQL with CDA tokens.
 
 ```bash
 # CMA: Create a draft entry
-curl -X POST https://api.contentful.com/spaces/{s}/environments/{e}/entries \
+curl -X POST https://api.contentful.com/spaces/{space_id}/environments/{env_id}/entries \
   -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -H "X-Contentful-Content-Type: blogPost" \
@@ -64,6 +64,6 @@ curl -X POST https://api.contentful.com/spaces/{s}/environments/{e}/entries \
 # Then publish: PUT .../entries/{id}/published with X-Contentful-Version header
 
 # CDA: Fetch entries
-curl "https://cdn.contentful.com/spaces/{s}/environments/{e}/entries?content_type=blogPost" \
+curl "https://cdn.contentful.com/spaces/{space_id}/environments/{env_id}/entries?content_type=blogPost" \
   -H "Authorization: Bearer {cda_token}"
 ```

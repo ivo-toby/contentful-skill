@@ -29,7 +29,7 @@ Use a CDA access token:
 curl -X POST https://graphql.contentful.com/content/v1/spaces/{space_id}/environments/master \
   -H "Authorization: Bearer {cda_token}" \
   -H "Content-Type: application/json" \
-  -d '{"query": "{ entryCollection { items { sys { id } } } }"}'
+  -d '{"query": "{ blogPostCollection { items { sys { id } } } }"}'
 ```
 
 ## Basic Query

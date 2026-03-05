@@ -117,14 +117,8 @@ Limit the initial sync to specific content:
 # Only assets
 ...?initial=true&type=Asset
 
-# Only deletions
+# Only deletions (both entries and assets)
 ...?initial=true&type=Deletion
-
-# Only deleted entries
-...?initial=true&type=DeletedEntry
-
-# Only deleted assets
-...?initial=true&type=DeletedAsset
 ```
 
 ### By content type
