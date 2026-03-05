@@ -157,7 +157,7 @@ Multiple terms are AND-ed (both must match).
 ...?content_type=blogPost&fields.title[match]=contentful
 ```
 
-`[match]` performs prefix matching on the field value.
+`[match]` performs a full-text search on the field value using Contentful's text search semantics and is not limited to prefix matches.
 
 ## Array Fields
 
