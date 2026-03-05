@@ -138,7 +138,7 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environment_aliases/{al
 ```bash
 # 1. Create new environment from current production
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/production-blue \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -d '{"name":"Production Blue","sourceEnvironmentId":"master"}'
 
@@ -148,14 +148,14 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/production
 
 # 4. Switch alias to new environment
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environment_aliases/master \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -H "X-Contentful-Version: 1" \
   -d '{"environment":{"sys":{"type":"Link","linkType":"Environment","id":"production-blue"}}}'
 
 # 5. Delete old environment after verification
 curl -X DELETE https://api.contentful.com/spaces/{space_id}/environments/production-green \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cma_token}"
 ```
 
 ### Feature Branch Workflow
@@ -163,7 +163,7 @@ curl -X DELETE https://api.contentful.com/spaces/{space_id}/environments/product
 ```bash
 # 1. Create feature branch from master
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/feature-new-layout \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -d '{"name":"New Layout Feature","sourceEnvironmentId":"master"}'
 
@@ -171,7 +171,7 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/feature-ne
 
 # 3. Clean up when done
 curl -X DELETE https://api.contentful.com/spaces/{space_id}/environments/feature-new-layout \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cma_token}"
 ```
 
 ## Best Practices

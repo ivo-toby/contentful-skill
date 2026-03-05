@@ -31,13 +31,13 @@ The `include` parameter controls how many levels of linked entries/assets the AP
 
 ```bash
 # No link resolution — linked entries returned as link objects only
-curl "...?content_type=blogPost&include=0" -H "Authorization: Bearer {token}"
+curl "...?content_type=blogPost&include=0" -H "Authorization: Bearer {cda_token}"
 
 # Default (1 level) — first-level linked entries/assets included
-curl "...?content_type=blogPost&include=1" -H "Authorization: Bearer {token}"
+curl "...?content_type=blogPost&include=1" -H "Authorization: Bearer {cda_token}"
 
 # Deep resolution (max 10)
-curl "...?content_type=blogPost&include=5" -H "Authorization: Bearer {token}"
+curl "...?content_type=blogPost&include=5" -H "Authorization: Bearer {cda_token}"
 ```
 
 | Value | Behavior |
@@ -185,26 +185,26 @@ Map assets from includes.Asset by sys.id → O(1) lookup per link
 
 ```bash
 curl "...?content_type=blogPost&select=fields.title,fields.slug,sys.id&include=0" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 ### Detail view (resolve author and images)
 
 ```bash
 curl "...entries/{entry_id}?include=2" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 ### Find entries referencing a specific entry
 
 ```bash
 curl "...?links_to_entry={entry_id}" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 ### Find entries referencing a specific asset
 
 ```bash
 curl "...?links_to_asset={asset_id}" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```

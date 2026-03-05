@@ -103,7 +103,7 @@ If a German translation doesn't exist for a field, the English value is returned
 Use `locale=*` to see which locales actually have content:
 
 ```bash
-curl "...?locale=*" -H "Authorization: Bearer {token}"
+curl "...?locale=*" -H "Authorization: Bearer {cda_token}"
 ```
 
 If `fields.title` only has `{"en-US": "Hello"}` and no `de-DE` key, the German locale is using the English fallback.
@@ -115,7 +115,7 @@ If `fields.title` only has `{"en-US": "Hello"}` and no `de-DE` key, the German l
 ```bash
 # Search German titles
 curl "...?content_type=blogPost&locale=de-DE&fields.title[match]=Hallo" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 ### Full-text search
@@ -124,14 +124,14 @@ Full-text `query` searches all locales by default:
 
 ```bash
 curl "...?content_type=blogPost&query=contentful" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 Combine with `locale` to search within a specific locale:
 
 ```bash
 curl "...?content_type=blogPost&locale=fr-FR&fields.title[match]=bonjour" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 ```
 
 ## Available Locales
@@ -176,7 +176,7 @@ Response:
 Assets can have different files per locale:
 
 ```bash
-curl "...?locale=*" -H "Authorization: Bearer {token}"
+curl "...?locale=*" -H "Authorization: Bearer {cda_token}"
 ```
 
 ```json

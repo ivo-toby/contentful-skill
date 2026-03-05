@@ -23,7 +23,7 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/{env_id}/e
 ```
 
 Required headers for CMA write operations:
-- `Authorization: Bearer {token}` — authentication
+- `Authorization: Bearer {cma_token}` — authentication
 - `Content-Type: application/vnd.contentful.management.v1+json` — request body format
 - `X-Contentful-Version: {version}` — optimistic locking (for updates)
 - `X-Contentful-Content-Type: {content_type_id}` — required when creating entries
@@ -46,15 +46,16 @@ The CMA uses optimistic concurrency control. Every entity has a version number i
 ```bash
 # 1. Get entry (note the version in sys.version)
 curl https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id} \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cma_token}"
 # Response: { "sys": { "version": 5, ... }, "fields": { ... } }
 
-# 2. Update with version header
+# 2. Update with version header — include ALL fields you want to keep
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id} \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -H "X-Contentful-Version: 5" \
-  -d '{"fields":{"title":{"en-US":"Updated Title"}}}'
+  -d '{"fields":{"title":{"en-US":"Updated Title"},"body":{"en-US":"Existing body"}}}'
+# NOTE: CMA PUT replaces the entire `fields` object. Omitted fields are removed.
 ```
 
 On success, the response contains `sys.version: 6`. Use that version for subsequent updates.
@@ -111,11 +112,11 @@ All collection endpoints return paginated results:
 ```bash
 # Page 1
 curl "https://cdn.contentful.com/spaces/{space_id}/environments/master/entries?limit=100&skip=0" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 
 # Page 2
 curl "https://cdn.contentful.com/spaces/{space_id}/environments/master/entries?limit=100&skip=100" \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cda_token}"
 
 # Continue until items.length < limit or skip >= total
 ```

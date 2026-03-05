@@ -104,7 +104,7 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/{env_id}/a
 ```bash
 # 1. Create asset from URL
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/assets/hero-image \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -d '{
     "fields": {
@@ -121,14 +121,14 @@ curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/ass
 
 # 2. Process
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/assets/hero-image/files/en-US/process \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "X-Contentful-Version: 1"
 
 # 3. Wait — poll GET until fields.file["en-US"].url is present
 
 # 4. Publish
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/assets/hero-image/published \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "X-Contentful-Version: 2"
 ```
 
@@ -262,8 +262,8 @@ Different files per locale:
 Process each locale separately:
 
 ```bash
-curl -X PUT .../assets/{asset_id}/files/en-US/process -H "Authorization: Bearer {token}" -H "X-Contentful-Version: 1"
-curl -X PUT .../assets/{asset_id}/files/de-DE/process -H "Authorization: Bearer {token}" -H "X-Contentful-Version: 2"
+curl -X PUT .../assets/{asset_id}/files/en-US/process -H "Authorization: Bearer {cma_token}" -H "X-Contentful-Version: 1"
+curl -X PUT .../assets/{asset_id}/files/de-DE/process -H "Authorization: Bearer {cma_token}" -H "X-Contentful-Version: 2"
 ```
 
 ## Common MIME Types

@@ -256,7 +256,7 @@ curl "https://api.contentful.com/spaces/{space_id}/environments/{env_id}/entries
 ```bash
 # 1. Create entry
 curl -X POST https://api.contentful.com/spaces/{space_id}/environments/master/entries \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -H "X-Contentful-Content-Type: blogPost" \
   -d '{"fields":{"title":{"en-US":"New Post"},"slug":{"en-US":"new-post"}}}'
@@ -264,28 +264,28 @@ curl -X POST https://api.contentful.com/spaces/{space_id}/environments/master/en
 
 # 2. Publish
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id}/published \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "X-Contentful-Version: 1"
 
 # 3. Update
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id} \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "Content-Type: application/vnd.contentful.management.v1+json" \
   -H "X-Contentful-Version: 2" \
   -d '{"fields":{"title":{"en-US":"Updated Post"},"slug":{"en-US":"new-post"}}}'
 
 # 4. Republish
 curl -X PUT https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id}/published \
-  -H "Authorization: Bearer {token}" \
+  -H "Authorization: Bearer {cma_token}" \
   -H "X-Contentful-Version: 3"
 
 # 5. Unpublish
 curl -X DELETE https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id}/published \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cma_token}"
 
 # 6. Delete
 curl -X DELETE https://api.contentful.com/spaces/{space_id}/environments/master/entries/{entry_id} \
-  -H "Authorization: Bearer {token}"
+  -H "Authorization: Bearer {cma_token}"
 ```
 
 ## Best Practices
