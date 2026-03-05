@@ -22,7 +22,6 @@ Read/write API for managing content, content types, assets, and environments.
 - [**content-types.md**](references/content-management/content-types.md) — Define/update content models, field types, validations
 - [**assets.md**](references/content-management/assets.md) — Upload, process, publish media files
 - [**environments.md**](references/content-management/environments.md) — Create, clone, manage environments and aliases
-- [**bulk-actions.md**](references/content-management/bulk-actions.md) — Bulk publish, unpublish, validate
 
 ## Content Delivery API (CDA)
 
