@@ -22,17 +22,19 @@ Skills are curated reference files that Claude Code can read during conversation
 
 ### Prerequisites
 
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed and authenticated
 
 ### Add the Skill
 
-From any project where you want Contentful API guidance available:
+Clone this repo into your project's `.claude/skills/` directory:
 
 ```bash
-claude skill add --from https://github.com/ivo-toby/contentful-skill
+cd your-project
+mkdir -p .claude/skills
+git clone git@github.com:ivo-toby/contentful-skill.git .claude/skills/contentful-skill
 ```
 
-This clones the skill into your project's `.claude/skills/` directory.
+That's it. Claude Code automatically picks up skills from `.claude/skills/`.
 
 ### Verify
 
@@ -46,10 +48,10 @@ Claude will read the relevant reference files and give you a curl-based answer w
 
 ### Update
 
-To pull the latest version of the skill:
+Pull the latest version:
 
 ```bash
-claude skill update contentful-api
+cd .claude/skills/contentful-skill && git pull
 ```
 
 ## Project Structure
