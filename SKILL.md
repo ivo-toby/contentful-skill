@@ -1,94 +1,69 @@
 ---
-name: contentful-sdk
-description: Comprehensive Contentful SDK guide for TypeScript/JavaScript. Covers Management SDK (CMA) for content/schema management, Delivery SDK (CDA) for fetching content, and App Framework SDK for building Contentful apps. Use for any Contentful API integration work.
+name: contentful-api
+description: Comprehensive Contentful REST API guide. Covers Content Management API (CMA) for creating/updating content, Content Delivery API (CDA) for fetching published content, Preview API, Images API, and GraphQL API. All examples use curl/HTTP — language-agnostic.
 ---
 
-# Contentful SDK Guide
+# Contentful REST API Guide
 
-Comprehensive guide for Contentful SDKs in TypeScript/JavaScript.
+Language-agnostic guide for Contentful APIs using HTTP/curl.
 
-## Which SDK Do You Need?
+## Shared References
 
-- **Management SDK (CMA)**: Creating/updating content, managing content types, assets, environments → Start at [references/management/overview.md](references/management/overview.md)
-- **Delivery SDK (CDA)**: Fetching published content for production apps → Start at [references/delivery/overview.md](references/delivery/overview.md)
-- **App Framework**: Building Contentful Apps that extend the UI → Start at [references/app-framework/overview.md](references/app-framework/overview.md)
+- **[Authentication](references/authentication.md)** — Token types, auth headers, API base URLs (US/EU)
+- **[HTTP Conventions](references/http-conventions.md)** — Version locking, rate limits, pagination, errors, locale structure
 
-## Management SDK (CMA)
+## Content Management API (CMA)
 
-For creating, updating, and managing content, content types, assets, and environments.
+Read/write API for managing content, content types, assets, and environments.
 
-**Start here**: [references/management/overview.md](references/management/overview.md)
+**Start here**: [references/content-management/overview.md](references/content-management/overview.md)
 
-**Topics**:
-- [**content-types.md**](references/management/content-types.md) - Define and update content models with field types and validations
-- [**entries.md**](references/management/entries.md) - Create, update, query, and publish entries with version locking
-- [**assets.md**](references/management/assets.md) - Upload, process, and publish media files
-- [**environments.md**](references/management/environments.md) - Create, clone, and manage environments and aliases
-- [**error-handling.md**](references/management/error-handling.md) - Handle rate limits, version conflicts, and validation errors
-- [**bulk-operations.md**](references/management/bulk-operations.md) - Pagination, batch processing, and concurrency control
+- [**entries.md**](references/content-management/entries.md) — CRUD, publish/unpublish, versioning, query parameters
+- [**content-types.md**](references/content-management/content-types.md) — Define/update content models, field types, validations
+- [**assets.md**](references/content-management/assets.md) — Upload, process, publish media files
+- [**environments.md**](references/content-management/environments.md) — Create, clone, manage environments and aliases
 
-## Delivery SDK (CDA)
+## Content Delivery API (CDA)
 
-For fetching published content in production applications.
+Read-only API for fetching published content.
 
-**Start here**: [references/delivery/overview.md](references/delivery/overview.md)
+**Start here**: [references/content-delivery/overview.md](references/content-delivery/overview.md)
 
-**Topics**:
-- [**querying.md**](references/delivery/querying.md) - Query parameters, filters, search operators, and pagination
-- [**includes-links.md**](references/delivery/includes-links.md) - Link resolution, includes parameter, and handling references
-- [**localization.md**](references/delivery/localization.md) - Locale handling, fallbacks, and multi-language content
-- [**rich-text.md**](references/delivery/rich-text.md) - Rendering rich text fields with embedded entries and assets
+- [**querying.md**](references/content-delivery/querying.md) — Filters, search operators, pagination, ordering
+- [**includes-links.md**](references/content-delivery/includes-links.md) — Include parameter, link resolution
+- [**localization.md**](references/content-delivery/localization.md) — Locale parameter, fallback chains
+- [**sync.md**](references/content-delivery/sync.md) — Incremental content synchronization
 
-## App Framework SDK
+## Content Preview API
 
-For building apps that extend the Contentful UI.
+Draft + published content via same CDA endpoints, different host/token.
 
-**Start here**: [references/app-framework/overview.md](references/app-framework/overview.md)
+**Reference**: [references/content-preview/overview.md](references/content-preview/overview.md)
 
-**Topics**:
-- [**locations.md**](references/app-framework/locations.md) - All app locations: field, sidebar, dialog, entry editor, page, config
-- [**sdk-apis.md**](references/app-framework/sdk-apis.md) - Navigator, dialogs, notifier, access, and window APIs
-- [**parameters.md**](references/app-framework/parameters.md) - Installation, instance, and invocation parameters
+## Images API
+
+On-the-fly image transformations via URL parameters. No authentication needed.
+
+**Reference**: [references/images/overview.md](references/images/overview.md)
+
+## GraphQL API
+
+Query content via GraphQL with CDA tokens.
+
+**Reference**: [references/graphql/overview.md](references/graphql/overview.md)
 
 ## Quick Reference
 
-### Version Locking (Management SDK)
-Always pass `sys` when updating to prevent conflicts:
-```typescript
-const entry = await client.entry.get({ spaceId, environmentId, entryId })
-await client.entry.update({ spaceId, environmentId, entryId }, {
-  sys: entry.sys,  // Required for version locking
-  fields: { ... }
-})
-```
+```bash
+# CMA: Create a draft entry
+curl -X POST https://api.contentful.com/spaces/{space_id}/environments/{env_id}/entries \
+  -H "Authorization: Bearer {cma_token}" \
+  -H "Content-Type: application/vnd.contentful.management.v1+json" \
+  -H "X-Contentful-Content-Type: blogPost" \
+  -d '{"fields":{"title":{"en-US":"Hello"}}}'
+# Then publish: PUT .../entries/{id}/published with X-Contentful-Version header
 
-### TypeScript Entry Skeletons (Delivery SDK)
-Define type-safe content structures:
-```typescript
-type BlogPostSkeleton = {
-  contentTypeId: 'blogPost'
-  fields: {
-    title: EntryFieldTypes.Text
-    slug: EntryFieldTypes.Symbol
-    body: EntryFieldTypes.RichText
-  }
-}
-const entry = await client.getEntry<BlogPostSkeleton>('entry-id')
-```
-
-### CMA Integration in Apps (App Framework)
-Use SDK adapter to avoid exposing tokens:
-```typescript
-import contentful from 'contentful-management'
-
-const cma = contentful.createClient(
-  { apiAdapter: sdk.cmaAdapter },
-  {
-    type: 'plain',
-    defaults: {
-      spaceId: sdk.ids.space,
-      environmentId: sdk.ids.environmentAlias ?? sdk.ids.environment
-    }
-  }
-)
+# CDA: Fetch entries
+curl "https://cdn.contentful.com/spaces/{space_id}/environments/{env_id}/entries?content_type=blogPost" \
+  -H "Authorization: Bearer {cda_token}"
 ```
